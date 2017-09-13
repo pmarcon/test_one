@@ -1,0 +1,18 @@
+
+---
+- hosts: all
+  vars:
+
+  remote_user: root
+
+  tasks:
+
+  - name: "Find installed patches on EAP"
+    command: ls -v {{ eap_overlay_path }}
+    register: releases
+
+  - name: "Log all patches"
+    debug: msg={{ releases.stdout_lines }}
+
+  - name: "Log lastest patch"
+    debug: msg="{{ releases.stdout_lines | last }}"
